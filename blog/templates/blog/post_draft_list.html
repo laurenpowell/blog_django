@@ -1,0 +1,22 @@
+{% extends 'blog/base.html' %}
+
+
+{% block content %}
+    <div class="row justify-content-evenly">
+        <div class='draft-list'>
+            <h2>Unpublished Posts</h2>
+        </div>
+        {% for post in posts %}
+            <div class="col-10">
+                <article class="post">
+                    <time class="date" >
+                        {{ post.created_date }}
+                    </time>
+                    <h2><a href="{% url 'post_detail' pk=post.pk%}">{{ post.title }}</a></h2>
+                    <p>{{ post.text|truncatechars:200 }}</p>
+                </article>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+

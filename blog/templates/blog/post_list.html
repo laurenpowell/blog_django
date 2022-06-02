@@ -1,0 +1,38 @@
+{% extends 'blog/base.html' %}
+{% load custom_tags %}
+
+{% block content %}
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 ">
+    {% for post in posts %}
+        <div class="col d-flex justify-content-center">
+            <div class="card h-100 text-center" style="width: 18rem;">
+                {% if post.image %}
+                    <img src="{{post.image.url}}" class="card-img-top " alt="...">
+                {% else %}
+                    <img src="{% random_image "/images/" %}" class="card-img-top " alt="...">
+                
+                {% endif %}
+                <div class="card-body">
+                    <time class="date">{{ post.published_date }}</time>
+                    <h5 class="card-title">
+                        <a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a>
+                    </h5>
+                    <p class="card-text">{{ post.text|truncatechars:50 }}</p>
+                </div>
+
+                <div class="card-footer text-muted commentlink">
+                    <a href="{% url 'post_detail' pk=post.pk %}">
+                        -Comments: {{ post.approved_comments.count }}
+                    </a>
+                    {% if user.is_authenticated %}
+                        <div><a href="{% url 'post_detail' pk=post.pk %}">
+                            (Comments to approve: {{ post.nonapproved_comments.count }})
+                        </a></div>
+                    {% endif %}
+                </div>
+            </div>   
+        </div>  
+    {% endfor %}
+    </div>
+{% endblock %}
+ 

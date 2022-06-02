@@ -1,0 +1,14 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+    {% if form.title.value %}
+        <h2>Edit Post</h2>
+    {% else %}
+        <h2>Create New Post</h2>
+    {%endif%}
+    <form enctype='multipart/form-data' method="POST" class="post-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="save btn btn-secondary">Save</button>
+    </form>
+{% endblock %}
